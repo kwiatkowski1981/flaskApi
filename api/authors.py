@@ -1,29 +1,17 @@
-from psycopg2 import extras
 from flask import Response, request, abort
-from db import get_connection
 from json import dumps, loads
+from repositories import AuthorsRepository
 
 
 def index():
-    connection = get_connection()
-    cursor = connection.cursor(cursor_factory= extras.RealDictCursor)
-    cursor.execute('SELECT id, first_name, last_name FROM authors')
-
-    return Response(dumps(cursor.fetchall()), mimetype='application/json')
+    repository = AuthorsRepository()
+    return Response(dumps(repository.get_all()), mimetype='application/json')
 
 
 def add():
+    repository = AuthorsRepository()
     data = loads(request.data.decode('utf-8'))
-
-    connection = get_connection()
-    cursor = connection.cursor()
-
-    cursor.execute(
-        'INSERT INTO authors(first_name, last_name) VALUES(%s, %s) RETURNING id',
-        (data['first_name'], data['last_name'])
-    )
-    author_id = cursor.fetchone()[0]
-    connection.commit()
+    author_id = repository.save(data['first_name'], data['last_name'])
 
     return Response(dumps({
         'id': author_id
@@ -31,18 +19,13 @@ def add():
 
 
 def delete(author_id):
-    connection = get_connection()
-    cursor = connection.cursor(cursor_factory=extras.RealDictCursor)
-    cursor.execute('SELECT id, first_name, last_name FROM authors WHERE id=%s', (author_id,))
-    author = cursor.fetchone()
+    repository = AuthorsRepository()
+    author = repository.get(author_id)
     if author is None:
         abort(404)
-
-    cursor.execute('DELETE FROM authors WHERE id=%s', (author_id,))
-    connection.commit()
+    repository.delete(author_id)
 
     return Response(dumps({
         'status': 'ok',
         'author': 'usunięty'
     }), mimetype='application/json', status=200)
-
