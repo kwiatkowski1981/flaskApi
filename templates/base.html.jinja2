@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-{#{% block intro %} To jest wstęp {% endblock %}#}
-{% block content %} {% endblock %}
-</body>
+    <body>
+        {% if current_user,is_authenticated %}
+            Witaj {{ current_user.username }}
+        {% endif %}
+        {#{% block intro %} To jest wstęp {% endblock %}#}
+        {% block content %} {% endblock %}
+    </body>
 </html>

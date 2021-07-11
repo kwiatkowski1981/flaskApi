@@ -10,7 +10,7 @@ class UserRepository:
 
     def map_row_to_user(self, row):
         user = User()
-        user_id = row['id']
+        user.id = row['id']
         user.username = row['username']
         user.password = row['password']
         return user
