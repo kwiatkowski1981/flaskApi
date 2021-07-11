@@ -11,7 +11,7 @@ app.add_url_rule('/authors/<author_id>', view_func=authors.delete, methods=['DEL
 
 # controllers
 app.add_url_rule('/login', view_func=login)
-app.add_url_rule('/register', view_func=register)
+app.add_url_rule('/register', view_func=register, methods=['GET', 'POST'])
 
 
 

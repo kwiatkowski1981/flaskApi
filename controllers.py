@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, request
 from forms import RegisterForm
 
 
@@ -7,5 +7,7 @@ def login():
 
 
 def register():
-    form = RegisterForm()
+    form = RegisterForm(request.form)
+    if request.method == 'POST' and form.validate():
+        print('Added a new user.')
     return render_template('register.html.jinja2', form=form)
