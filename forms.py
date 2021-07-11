@@ -8,3 +8,5 @@ class RegisterForm(Form):
         validators.EqualTo('password_repeat')
     ])
     password_repeat = PasswordField('repeat password: ')
+
+

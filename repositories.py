@@ -19,7 +19,7 @@ class UserRepository:
         user_id = self.cursor.fetchone()
         self.connection.commit()
 
-        return user_id['username']
+        return user_id['id']
 
 
 class AuthorsRepository:
