@@ -1,3 +1,4 @@
+from auth import User
 from psycopg2 import extras
 from db import get_connection
 
@@ -7,12 +8,24 @@ class UserRepository:
         self.connection = get_connection()
         self.cursor = self.connection.cursor(cursor_factory=extras.RealDictCursor)
 
+    def map_row_to_user(self, row):
+        user = User()
+        user_id = row['id']
+        user.username = row['username']
+        user.password = row['password']
+        return user
+
     def get_by_username(self, username):
         self.cursor.execute('SELECT id, username, password FROM users WHERE username=%s', (username,))
-        return self.cursor.fetchone()
+        return self.map_row_to_user(
+            self.cursor.fetchone()
+        )
 
     def get_by_id(self, user_id):
         self.cursor.execute('SELECT id, username, password FROM users WHERE id=%s', (user_id,))
+        return self.map_row_to_user(
+            self.cursor.fetchone()
+        )
 
     def save(self, username, password):
         self.cursor.execute(
