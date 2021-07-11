@@ -1,7 +1,7 @@
 from flask import Flask
 from api import authors
 from flask_login import LoginManager
-from controllers import login, register
+from controllers import login, logout, register
 from repositories import UserRepository
 
 
@@ -24,6 +24,7 @@ app.add_url_rule('/authors/<author_id>', view_func=authors.delete, methods=['DEL
 
 # controllers
 app.add_url_rule('/login', view_func=login, methods=['GET', 'POST'])
+app.add_url_rule('/logout', view_func=logout, methods=['GET'])
 app.add_url_rule('/register', view_func=register, methods=['GET', 'POST'])
 
 

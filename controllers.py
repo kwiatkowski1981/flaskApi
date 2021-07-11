@@ -1,8 +1,8 @@
 from hashlib import pbkdf2_hmac
-from flask import render_template, request, abort
+from flask import render_template, request, abort, redirect
 from repositories import UserRepository
 from forms import RegisterForm, LoginForm
-from flask_login import login_user
+from flask_login import login_user, logout_user
 
 
 def login():
@@ -21,6 +21,11 @@ def login():
             abort(400)
 
     return render_template('login.html.jinja2', form=form)
+
+
+def logout():
+    logout_user()
+    return redirect('/login')
 
 
 def register():
