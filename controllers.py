@@ -1,4 +1,5 @@
 from flask import render_template
+from forms import RegisterForm
 
 
 def login():
@@ -6,5 +7,5 @@ def login():
 
 
 def register():
-    return render_template('register.html.jinja2')
-
+    form = RegisterForm()
+    return render_template('register.html.jinja2', form=form)
