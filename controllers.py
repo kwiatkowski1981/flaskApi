@@ -9,7 +9,6 @@ def login():
     if request.method == 'POST' and form.validate():
         username = form.username.data
         crypted_password = crypt_password(form.password.data)
-
         # 1. get the repository
         repository = UserRepository()
         # 2. get user by username
