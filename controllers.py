@@ -5,21 +5,21 @@ from forms import RegisterForm, LoginForm
 
 
 def login():
+        # 1. get the repository
+        # 2. get user by username
+        # 3. validate passwords
     form = LoginForm(request.form)
     if request.method == 'POST' and form.validate():
         username = form.username.data
         crypted_password = crypt_password(form.password.data)
-        # 1. get the repository
         repository = UserRepository()
-        # 2. get user by username
         user = repository.get_by_username(username)
-        # 3. validate passwords
         user['password'] == crypted_password
-        print(user['password'])
-        print(crypted_password)
-        quit()
+        # print(user['password'])
+        # print(crypted_password)
+        # quit()
 
-    return render_template('/login.html.jinja2', form=form)
+    return render_template('login.html.jinja2', form=form)
 
 
 def register():
@@ -35,7 +35,7 @@ def register():
         repository = UserRepository()
         repository.save(username, password)
 
-    return render_template('/register.html.jinja2', form=form)
+    return render_template('register.html.jinja2', form=form)
 
 
 def crypt_password(password):

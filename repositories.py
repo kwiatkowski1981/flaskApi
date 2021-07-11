@@ -11,6 +11,9 @@ class UserRepository:
         self.cursor.execute('SELECT id, username, password FROM users WHERE username=%s', (username,))
         return self.cursor.fetchone()
 
+    def get_by_id(self, user_id):
+        self.cursor.execute('SELECT id, username, password FROM users WHERE id=%s', (user_id,))
+
     def save(self, username, password):
         self.cursor.execute(
             'INSERT INTO users(username, password) VALUES(%s, %s) RETURNING id',
