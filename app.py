@@ -23,6 +23,7 @@ app.add_url_rule('/authors', view_func=authors.add, methods=['POST'])
 app.add_url_rule('/authors/<author_id>', view_func=authors.delete, methods=['DELETE'])
 
 # controllers
+app.add_url_rule('/home', view_func=home, methods=['GET'])
 app.add_url_rule('/login', view_func=login, methods=['GET', 'POST'])
 app.add_url_rule('/logout', view_func=logout, methods=['GET'])
 app.add_url_rule('/register', view_func=register, methods=['GET', 'POST'])

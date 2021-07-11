@@ -28,6 +28,10 @@ def logout():
     return redirect('/login')
 
 
+def home():
+    return render_template('home.html.jinja2')
+
+
 def register():
     # 1. hash password password
     # 2. create repository
