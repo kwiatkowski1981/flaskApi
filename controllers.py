@@ -15,8 +15,11 @@ def login():
         user = repository.get_by_username(username)
         # 3. validate passwords
         user['password'] == crypted_password
+        print(user['password'])
+        print(crypted_password)
+        quit()
 
-    return render_template('login.html.jinja2', form=form)
+    return render_template('/login.html.jinja2', form=form)
 
 
 def register():
@@ -32,15 +35,16 @@ def register():
         repository = UserRepository()
         repository.save(username, password)
 
-    return render_template('register.html.jinja2', form=form)
+    return render_template('/register.html.jinja2', form=form)
 
 
 def crypt_password(password):
     salt = 'abcdefg123456!@#$%^&'
-    return pbkdf2_hmac('sha256',
-                       password.encode('utf8'),
-                       salt.encode('utf8'),
-                       999
-                       )
+    password = pbkdf2_hmac('sha256',
+                           password.encode('utf8'),
+                           salt.encode('utf8'),
+                           999
+                           )
+    return password.hex()
 
-#    TODO ewad about pbkdf2_hmac function
+#    TODO read about pbkdf2_hmac function

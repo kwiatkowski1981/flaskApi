@@ -13,7 +13,6 @@ class RegisterForm(Form):
 class LoginForm(Form):
     username = StringField('username: ', [validators.length(min=5)])
     password = PasswordField('password: ', [
-        validators.length(min=8),
-        validators.EqualTo('password_repeat')
+        validators.length(min=8)
     ])
     password_repeat = PasswordField('repeat password: ')
