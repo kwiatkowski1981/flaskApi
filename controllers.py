@@ -19,7 +19,7 @@ def login():
         user = repository.get_by_username(username)
         if user.password == crypted_password:
             login_user(user)
-            return redirect('/login')   # after log in redirect user to home site
+            return redirect('/home')   # after log in redirect user to home site
         else:
             abort(400)
 
