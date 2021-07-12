@@ -2,13 +2,15 @@ from hashlib import pbkdf2_hmac
 from flask import render_template, request, abort, redirect
 from repositories import UserRepository
 from forms import RegisterForm, LoginForm
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, login_required
 
 
 def login():
         # 1. get the repository
         # 2. get user by username
         # 3. validate passwords
+        # TODO read about "oauth", 'json web token to secure API
+
     form = LoginForm(request.form)
     if request.method == 'POST' and form.validate():
         username = form.username.data
@@ -17,6 +19,7 @@ def login():
         user = repository.get_by_username(username)
         if user.password == crypted_password:
             login_user(user)
+            return redirect('/login')   # after log in redirect user to home site
         else:
             abort(400)
 
@@ -28,6 +31,7 @@ def logout():
     return redirect('/login')
 
 
+@login_required
 def home():
     return render_template('home.html.jinja2')
 
